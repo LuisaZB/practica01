@@ -52,13 +52,13 @@ public class TipoController {
         return "redirect:/tipo/listado";
     }
 
-    @GetMapping("/eliminar/{idTipo}")
+    @GetMapping("/eliminar/{idArbol}")
     public String tipoEliminar(Tipo tipo) {
         tipoService.delete(tipo);
         return "redirect:/tipo/listado";
     }
 
-    @GetMapping("/modificar/{idTipo}")
+    @GetMapping("/modificar/{idArbol}")
     public String tipoModificar(Tipo tipo, Model model) {
         tipo = tipoService.getTipo(tipo);
         model.addAttribute("tipo", tipo);

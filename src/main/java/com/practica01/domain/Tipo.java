@@ -25,12 +25,15 @@ public class Tipo implements Serializable{
     public Tipo() {
     }
 
-    public Tipo(String nombre, String descripcion, int existencias, String rutaImagen) {
+    public Tipo(String nombre, String descripcion, int existencias, String rutaImagen, boolean activo) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.existencias = existencias;
         this.rutaImagen = rutaImagen;
+        this.activo = activo;
     }
+
+    
     
     
     

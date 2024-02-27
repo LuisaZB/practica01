@@ -41,8 +41,16 @@
                               method="POST" class="was-validated" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="mb-3">
+                                    <label for="nombre">[[#{tipo.nombre}]]</label>
+                                    <input type="text" class="form-control" name="nombre" required="true"/>
+                                </div>
+                                <div class="mb-3">
                                     <label for="descripcion">[[#{tipo.descripcion}]]</label>
                                     <input type="text" class="form-control" name="descripcion" required="true"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="existencias">[[#{tipo.existencias}]]</label>
+                                    <input type="number" class="form-control" name="existencias" required="true"/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="activo">[[#{tipo.activo}]]</label>
@@ -63,8 +71,8 @@
             </div>
         </section>
 
-        <!-- 3 Sección principal para mostrar la informaccion de la entidad categoria -->
-        <section th:fragment="listadoTipos" id="Tipos">
+        <!-- 3 Sección principal para mostrar la informaccion de la entidad tipo -->
+        <section th:fragment="listadoTipos" id="tipos">
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
@@ -72,23 +80,27 @@
                             <div class="card-header">
                                 <h4>[[#{tipo.listado}]]</h4>
                             </div>
-                            <div th:if="${tiposs != null and !tipos.empty}">
+                            <div th:if="${tipos != null and !tipos.empty}">
                                 <table class="table table-striped table-hover">
                                     <thead class="table-dark">
                                         <tr><th>#</th>
+                                            <th>[[#{tipo.nombre}]]</th>
                                             <th>[[#{tipo.descripcion}]]</th>
+                                            <th>[[#{tipo.existencias}]]</th>
                                             <th>[[#{tipo.activo}]]</th>
                                             <th></th></tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="tipo, contador : ${tipos}">
                                             <td>[[${contador.count}]]</td>
+                                            <td>[[${tipo.nombre}]]</td>
                                             <td>[[${tipo.descripcion}]]</td>
+                                            <td>[[${tipo.existencias}]]</td>
                                             <td th:text="${tipo.activo} ? 'Activa' : 'Inactiva'" />
-                                            <td><a th:href="@{/tipo/eliminar/}+${tipo.idTipo}"
+                                            <td><a th:href="@{/tipo/eliminar/}+${tipo.idArbol}"
                                                    class="btn btn-danger">
                                                     <i class="fas fa-trash"></i> [[#{accion.eliminar}]]</a>
-                                                <a th:href="@{/tipo/modificar/}+${tipo.idTipo}"
+                                                <a th:href="@{/tipo/modificar/}+${tipo.idArbol}"
                                                    class="btn btn-success">
                                                     <i class="fas fa-pencil"></i> [[#{accion.actualizar}]]</a></td></tr>
                                     </tbody>
@@ -121,7 +133,7 @@
                           th:object="${tipo}"
                           class="was-validated"                          
                           enctype="multipart/form-data">
-                        <input type="hidden" name="idTipo" th:field="*{idTipo}"/>
+                        <input type="hidden" name="idArbol" th:field="*{idArbol}"/>
                         <input type="hidden" name="rutaImagen" th:field="*{rutaImagen}"/>
                         <section th:replace="~{tipo/fragmentos :: botonesEditar}"/>
                         <div id=details>
@@ -134,9 +146,21 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="mb-3">
+                                                    <label for="nombre">[[#{tipo.nombre}]]</label>
+                                                    <input type="text" class="form-control" 
+                                                           name="nombre" th:field="*{nombre}"
+                                                           required="true">
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="descripcion">[[#{tipo.descripcion}]]</label>
                                                     <input type="text" class="form-control" 
                                                            name="descripcion" th:field="*{descripcion}"
+                                                           required="true">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="existencias">[[#{tipo.existencias}]]</label>
+                                                    <input type="number" class="form-control" 
+                                                           name="existencias" th:field="*{existencias}"
                                                            required="true">
                                                 </div>
                                                 <div class="mb-3">
@@ -151,7 +175,7 @@
                                                     <label for="imagen">[[#{tipo.rutaImagen}]]</label>
                                                     <input class="form-control" type="file" name="imagenFile"
                                                            onchange="readURL(this);" />
-                                                    <img id="blah" th:src="@{${tpo.rutaImagen}}" alt="your image" height="200"/>
+                                                    <img id="blah" th:src="@{${tipo.rutaImagen}}" alt="your image" height="200"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +197,7 @@
                         </a>
                     </div>
                     <div class="col-md-4 d-grid">                                
-                        <a th:href="@{/tipo/eliminar/}+${tipo.idTipo}"
+                        <a th:href="@{/tipo/eliminar/}+${tipo.idArbol}"
                            class="btn btn-danger">
                             <i class="fas fa-trash"></i> [[#{accion.eliminar}]]
                         </a>
